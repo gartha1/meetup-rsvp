@@ -17,37 +17,75 @@ namespace meetup_rsvp
 {
     public partial class Form1 : Form
     {
-        private static string dateTimeServerUrl = "http://www.timeanddate.com/worldclock/uk/london";
-        private static bool compareTimes = false; // compares local time with event time
-        private static bool updateTADTime = false;
+        private  string dateTimeServerUrl = "http://www.timeanddate.com/worldclock/uk/london";
+        private  bool compareTimes = false; // compares local time with event time
+        private  bool updateTADTime = false;
         private DigiClock clockTAD; // clock for timeanddate.com
         public Form1()
         {
             InitializeComponent();
         }
 
-        
+        // EVENT HANDLERS
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            FetchTAD();
+        }
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             txbCurlCommand.Focus();
             tmrLocalDateTime.Start();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+
+        private void btnSet_Click(object sender, EventArgs e)
         {
-            FetchAndShowDateNTime();
+            btnSet.Enabled = false;
+            btnCancel.Enabled = true;
+            compareTimes = true;
+            txbCurlCommand.Enabled = false;
+            DateTime eventDate = dtpEventDate.Value;
+            DateTime eventTime = dtpEventTime.Value;
+            dtpEventDate.Enabled = false;
+            dtpEventTime.Enabled = false;
+
+            //Debug.WriteLine(eventDate.ToShortDateString());
+            //Debug.WriteLine(eventTime.ToLongTimeString());
+            UpdateAppStatus("Request set for url: " + txbCurlCommand.Text.Trim());
+            UpdateAppStatus("----------------------------------");
+
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnCancel.Enabled = false;
+            txbCurlCommand.Enabled = true;
+            dtpEventDate.Enabled = true;
+            dtpEventTime.Enabled = true;
+            compareTimes = false;
+            btnSet.Enabled = true;
+            UpdateAppStatus("Request cancelled for url: " + txbCurlCommand.Text.Trim());
+            UpdateAppStatus("----------------------------------");
+        }
+
+        private void lnkClear_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            txbStatus.Clear();
+        }
+
+
         private void tmrLocalDateTime_Tick(object sender, EventArgs e)
         {
             UpdateLocalTimeLabels();
-            if(updateTADTime)
+            // Update TAD time locally only if fetch was succcessful when app started.
+            if (updateTADTime)
                 UpdateTADLocally();
             CheckEventTimeReached();
         }
 
-       
+        // METHODS CALLED FROM EVENT HANDLERS OR OTHER METHODS
 
-        
         /// <summary>
         /// takes a url and returns a string of response after making a get request.
         /// make sure you call ValidateUrl first
@@ -120,7 +158,8 @@ namespace meetup_rsvp
             return result;
         } // validateUrl() ends
 
-        private void FetchAndShowDateNTime()
+        
+        private void FetchTAD()
         {
             
             UpdateAppStatus("Fetching data from timeanddate.com");
@@ -159,6 +198,25 @@ namespace meetup_rsvp
             }
         }
 
+        /* Midnight fetch test:
+          
+         int nth = 0;
+         nth++;
+            if (nth == 10)
+                currentTime = "00:00:00"; 
+         */
+        private void UpdateTADLocally()
+        {
+            
+            string currentTime = clockTAD.tick();
+            lblTADtime.Text = currentTime;
+            if (currentTime == "00:00:00")
+            {
+                updateTADTime = false;
+                FetchTAD();
+            }
+        }
+
         private void UpdateAppStatus(string message)
         {
             txbStatus.Text += Environment.NewLine + message;
@@ -168,12 +226,6 @@ namespace meetup_rsvp
         {
             this.lblLocalDate.Text = DateTime.Now.ToShortDateString();
             this.lblLocalTime.Text = DateTime.Now.ToLongTimeString();
-        }
-
-        private void UpdateTADLocally()
-        {
-            string currentTime = clockTAD.tick();
-            lblTADtime.Text = currentTime;
         }
 
         private void CheckEventTimeReached()
@@ -198,43 +250,6 @@ namespace meetup_rsvp
                 }
             }
         }
-
-        private void btnSet_Click(object sender, EventArgs e)
-        {
-            btnSet.Enabled = false;
-            btnCancel.Enabled = true;
-            compareTimes = true;
-            txbCurlCommand.Enabled = false;
-            DateTime eventDate = dtpEventDate.Value;
-            DateTime eventTime = dtpEventTime.Value;
-            dtpEventDate.Enabled = false;
-            dtpEventTime.Enabled = false;
-
-            //Debug.WriteLine(eventDate.ToShortDateString());
-            //Debug.WriteLine(eventTime.ToLongTimeString());
-            UpdateAppStatus("Request set for url: " + txbCurlCommand.Text.Trim());
-            UpdateAppStatus("----------------------------------");
-
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            btnCancel.Enabled = false;
-            txbCurlCommand.Enabled = true;
-            dtpEventDate.Enabled = true;
-            dtpEventTime.Enabled = true;
-            compareTimes = false;
-            btnSet.Enabled = true;
-            UpdateAppStatus("Request cancelled for url: " + txbCurlCommand.Text.Trim());
-            UpdateAppStatus("----------------------------------");
-        }
-
-        private void lnkClear_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            txbStatus.Clear();
-        }
-
-        
 
 
     } // form ends
