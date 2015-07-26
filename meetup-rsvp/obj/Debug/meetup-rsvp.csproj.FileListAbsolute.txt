@@ -6,3 +6,4 @@ C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Propertie
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csproj.GenerateResource.Cache
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.exe
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.pdb
+C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csprojResolveAssemblyReference.cache

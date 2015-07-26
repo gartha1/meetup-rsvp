@@ -132,13 +132,20 @@ namespace meetup_rsvp
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardOutput = true;
             pinfo.CreateNoWindow = true;
-
-            Process pCurl = Process.Start(pinfo);
-            while (!pCurl.StandardOutput.EndOfStream)
+            try
             {
-                sb.Append(pCurl.StandardOutput.ReadLine());
+                Process pCurl = Process.Start(pinfo);
+                while (!pCurl.StandardOutput.EndOfStream)
+                {
+                    sb.Append(pCurl.StandardOutput.ReadLine());
+                }
+                result = sb.ToString();
             }
-            result = sb.ToString();
+            catch
+            {
+                UpdateAppStatus("curl not found in PATH");
+            }
+            
             return result;
         }
 
