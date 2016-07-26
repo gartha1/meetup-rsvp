@@ -82,7 +82,9 @@ namespace meetup_rsvp
         {
             string result = "";
             StringBuilder sb = new StringBuilder();
-            ProcessStartInfo pinfo = new ProcessStartInfo(@"C:\Installed\curl740\curl.exe", args);
+//            ProcessStartInfo pinfo = new ProcessStartInfo(@"C:\Installed\curl740\curl.exe", args);
+            ProcessStartInfo pinfo = new ProcessStartInfo("curl.exe", args);
+
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardOutput = true;
             pinfo.CreateNoWindow = true;
