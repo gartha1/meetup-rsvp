@@ -19,6 +19,8 @@ namespace meetup_rsvp
     {
         private static string dateTimeServerUrl = "http://www.timeanddate.com/worldclock/uk/london";
         private static bool compareTimes = false; // compares local time with event time
+        private static bool updateTADTime = false;
+        private DigiClock clockTAD; // clock for timeanddate.com
         public Form1()
         {
             InitializeComponent();
@@ -38,8 +40,12 @@ namespace meetup_rsvp
         private void tmrLocalDateTime_Tick(object sender, EventArgs e)
         {
             UpdateLocalTimeLabels();
+            if(updateTADTime)
+                UpdateTADLocally();
             CheckEventTimeReached();
         }
+
+       
 
         
         /// <summary>
@@ -144,6 +150,8 @@ namespace meetup_rsvp
                 lblTADtime.Text = strTime;
                 UpdateAppStatus("timeanddate.com data fetched successfully");
                 UpdateAppStatus("-----------------------------------------");
+                updateTADTime = true;
+                clockTAD = new DigiClock(strTime);
             }
             else
             {
@@ -161,7 +169,13 @@ namespace meetup_rsvp
             this.lblLocalDate.Text = DateTime.Now.ToShortDateString();
             this.lblLocalTime.Text = DateTime.Now.ToLongTimeString();
         }
-        
+
+        private void UpdateTADLocally()
+        {
+            string currentTime = clockTAD.tick();
+            lblTADtime.Text = currentTime;
+        }
+
         private void CheckEventTimeReached()
         {
             if (compareTimes)
