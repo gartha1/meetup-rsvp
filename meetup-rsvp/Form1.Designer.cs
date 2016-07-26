@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.txbUrl = new System.Windows.Forms.TextBox();
+            this.txbCurlCommand = new System.Windows.Forms.TextBox();
             this.btnSet = new System.Windows.Forms.Button();
             this.txbResponse = new System.Windows.Forms.TextBox();
             this.lblTADdate = new System.Windows.Forms.Label();
@@ -52,13 +52,15 @@
             this.lnkClear = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
-            // txbUrl
+            // txbCurlCommand
             // 
-            this.txbUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbUrl.Location = new System.Drawing.Point(12, 44);
-            this.txbUrl.Name = "txbUrl";
-            this.txbUrl.Size = new System.Drawing.Size(394, 26);
-            this.txbUrl.TabIndex = 0;
+            this.txbCurlCommand.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbCurlCommand.Location = new System.Drawing.Point(56, 44);
+            this.txbCurlCommand.Multiline = true;
+            this.txbCurlCommand.Name = "txbCurlCommand";
+            this.txbCurlCommand.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txbCurlCommand.Size = new System.Drawing.Size(350, 77);
+            this.txbCurlCommand.TabIndex = 0;
             // 
             // btnSet
             // 
@@ -75,12 +77,12 @@
             // txbResponse
             // 
             this.txbResponse.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbResponse.Location = new System.Drawing.Point(12, 101);
+            this.txbResponse.Location = new System.Drawing.Point(12, 156);
             this.txbResponse.Multiline = true;
             this.txbResponse.Name = "txbResponse";
             this.txbResponse.ReadOnly = true;
             this.txbResponse.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txbResponse.Size = new System.Drawing.Size(394, 114);
+            this.txbResponse.Size = new System.Drawing.Size(394, 94);
             this.txbResponse.TabIndex = 0;
             // 
             // lblTADdate
@@ -107,28 +109,28 @@
             // 
             this.lblUrl.AutoSize = true;
             this.lblUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUrl.Location = new System.Drawing.Point(8, 17);
+            this.lblUrl.Location = new System.Drawing.Point(12, 47);
             this.lblUrl.Name = "lblUrl";
-            this.lblUrl.Size = new System.Drawing.Size(32, 20);
+            this.lblUrl.Size = new System.Drawing.Size(38, 20);
             this.lblUrl.TabIndex = 7;
-            this.lblUrl.Text = "Url";
+            this.lblUrl.Text = "curl";
             // 
             // txbStatus
             // 
             this.txbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbStatus.Location = new System.Drawing.Point(12, 255);
+            this.txbStatus.Location = new System.Drawing.Point(12, 294);
             this.txbStatus.Multiline = true;
             this.txbStatus.Name = "txbStatus";
             this.txbStatus.ReadOnly = true;
             this.txbStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txbStatus.Size = new System.Drawing.Size(394, 147);
+            this.txbStatus.Size = new System.Drawing.Size(394, 108);
             this.txbStatus.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 78);
+            this.label1.Location = new System.Drawing.Point(12, 133);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 20);
             this.label1.TabIndex = 9;
@@ -138,7 +140,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 232);
+            this.label3.Location = new System.Drawing.Point(12, 267);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(156, 20);
             this.label3.TabIndex = 10;
@@ -255,7 +257,7 @@
             // 
             this.lnkClear.AutoSize = true;
             this.lnkClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkClear.Location = new System.Drawing.Point(175, 232);
+            this.lnkClear.Location = new System.Drawing.Point(175, 267);
             this.lnkClear.Name = "lnkClear";
             this.lnkClear.Size = new System.Drawing.Size(137, 20);
             this.lnkClear.TabIndex = 14;
@@ -287,7 +289,7 @@
             this.Controls.Add(this.lblTADdate);
             this.Controls.Add(this.txbResponse);
             this.Controls.Add(this.btnSet);
-            this.Controls.Add(this.txbUrl);
+            this.Controls.Add(this.txbCurlCommand);
             this.Name = "Form1";
             this.Text = "meetup-rsvp-demo";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -299,7 +301,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txbUrl;
+        private System.Windows.Forms.TextBox txbCurlCommand;
         private System.Windows.Forms.Button btnSet;
         private System.Windows.Forms.TextBox txbResponse;
         private System.Windows.Forms.Label lblTADdate;

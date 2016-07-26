@@ -27,7 +27,7 @@ namespace meetup_rsvp
         
         private void Form1_Shown(object sender, EventArgs e)
         {
-            txbUrl.Focus();
+            txbCurlCommand.Focus();
             tmrLocalDateTime.Start();
         }
 
@@ -77,6 +77,24 @@ namespace meetup_rsvp
             }
             return allData;
         } // GetResponse() ends
+
+        private string ExecuteCurl(string args)
+        {
+            string result = "";
+            StringBuilder sb = new StringBuilder();
+            ProcessStartInfo pinfo = new ProcessStartInfo(@"C:\Installed\curl740\curl.exe", args);
+            pinfo.UseShellExecute = false;
+            pinfo.RedirectStandardOutput = true;
+            pinfo.CreateNoWindow = true;
+
+            Process pCurl = Process.Start(pinfo);
+            while (!pCurl.StandardOutput.EndOfStream)
+            {
+                sb.Append(pCurl.StandardOutput.ReadLine());
+            }
+            result = sb.ToString();
+            return result;
+        }
 
         /// <summary>
         /// Validates an http or https url
@@ -136,8 +154,6 @@ namespace meetup_rsvp
             txbStatus.Text += Environment.NewLine + message;
         }
 
-
-
         private void UpdateLocalTimeLabels()
         {
             this.lblLocalDate.Text = DateTime.Now.ToShortDateString();
@@ -151,23 +167,18 @@ namespace meetup_rsvp
                 if (lblLocalDate.Text == dtpEventDate.Value.ToShortDateString()
                     && lblLocalTime.Text == dtpEventTime.Value.ToLongTimeString())
                 {
-                    if (ValidateUrl(txbUrl.Text.Trim()))
-                    {
+                   
                         //Debug.WriteLine("KABOOM");
                         UpdateAppStatus("Firing request for scheduled event");
-                        UpdateAppStatus("URL: " + txbUrl.Text);
+                        UpdateAppStatus("URL: " + txbCurlCommand.Text);
                         UpdateAppStatus("Date and Time: " + dtpEventDate.Value.ToShortDateString() + "  " + dtpEventTime.Value.ToLongTimeString());
-                        string response = GetResponse(txbUrl.Text.Trim());
+                        //string response = GetResponse(txbCurlCommand.Text.Trim());
+                        string response = ExecuteCurl(txbCurlCommand.Text.Trim());
+
                         UpdateAppStatus("Response Received:");
                         UpdateAppStatus("----");
                         UpdateAppStatus(response);
                         UpdateAppStatus("----");
-
-                    }
-                    else
-                    {
-                        UpdateAppStatus("Invalid Request URL");
-                    }
                 }
             }
         }
@@ -177,7 +188,7 @@ namespace meetup_rsvp
             btnSet.Enabled = false;
             btnCancel.Enabled = true;
             compareTimes = true;
-            txbUrl.Enabled = false;
+            txbCurlCommand.Enabled = false;
             DateTime eventDate = dtpEventDate.Value;
             DateTime eventTime = dtpEventTime.Value;
             dtpEventDate.Enabled = false;
@@ -185,7 +196,7 @@ namespace meetup_rsvp
 
             //Debug.WriteLine(eventDate.ToShortDateString());
             //Debug.WriteLine(eventTime.ToLongTimeString());
-            UpdateAppStatus("Request set for url: " + txbUrl.Text.Trim());
+            UpdateAppStatus("Request set for url: " + txbCurlCommand.Text.Trim());
             UpdateAppStatus("----------------------------------");
 
         }
@@ -193,12 +204,12 @@ namespace meetup_rsvp
         private void btnCancel_Click(object sender, EventArgs e)
         {
             btnCancel.Enabled = false;
-            txbUrl.Enabled = true;
+            txbCurlCommand.Enabled = true;
             dtpEventDate.Enabled = true;
             dtpEventTime.Enabled = true;
             compareTimes = false;
             btnSet.Enabled = true;
-            UpdateAppStatus("Request cancelled for url: " + txbUrl.Text.Trim());
+            UpdateAppStatus("Request cancelled for url: " + txbCurlCommand.Text.Trim());
             UpdateAppStatus("----------------------------------");
         }
 
@@ -210,5 +221,6 @@ namespace meetup_rsvp
         
 
 
-    }
-}
+    } // form ends
+} // namespace ends
+// POST tester : http://www.hashemian.com/tools/form-post-tester.php -d "abc=123"

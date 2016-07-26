@@ -1,7 +1,6 @@
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\bin\Debug\meetup-rsvp.exe.config
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\bin\Debug\meetup-rsvp.exe
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\bin\Debug\meetup-rsvp.pdb
-C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csprojResolveAssemblyReference.cache
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Form1.resources
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Properties.Resources.resources
 C:\data\bharat\johnsmith\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csproj.GenerateResource.Cache
