@@ -66,7 +66,7 @@
             // 
             this.btnSet.AutoSize = true;
             this.btnSet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSet.Location = new System.Drawing.Point(648, 42);
+            this.btnSet.Location = new System.Drawing.Point(676, 42);
             this.btnSet.Name = "btnSet";
             this.btnSet.Size = new System.Drawing.Size(93, 30);
             this.btnSet.TabIndex = 3;
@@ -193,7 +193,7 @@
             this.dtpEventTime.Location = new System.Drawing.Point(551, 44);
             this.dtpEventTime.Name = "dtpEventTime";
             this.dtpEventTime.ShowUpDown = true;
-            this.dtpEventTime.Size = new System.Drawing.Size(91, 26);
+            this.dtpEventTime.Size = new System.Drawing.Size(119, 26);
             this.dtpEventTime.TabIndex = 2;
             // 
             // dtpEventDate
@@ -245,7 +245,7 @@
             this.btnCancel.AutoSize = true;
             this.btnCancel.Enabled = false;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(747, 42);
+            this.btnCancel.Location = new System.Drawing.Point(775, 42);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(118, 30);
             this.btnCancel.TabIndex = 13;
@@ -269,7 +269,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(877, 414);
+            this.ClientSize = new System.Drawing.Size(949, 414);
             this.Controls.Add(this.lnkClear);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblNtpTime);

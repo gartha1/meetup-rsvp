@@ -29,7 +29,7 @@ namespace meetup_rsvp
         // EVENT HANDLERS
         private void Form1_Load(object sender, EventArgs e)
         {
-            FetchTAD();
+            FetchTAD(); // TAD - time and date.com
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -92,6 +92,19 @@ namespace meetup_rsvp
         /// </summary>
         /// <param name="url">http or https url</param>
         /// <returns></returns>
+        ///
+        // google make http request c# 
+        // derived from msdn
+        
+        // from msdn 
+        // https://support.microsoft.com/en-in/kb/307023
+        // How to make a GET request by using Visual C#
+        // and you added a catch and a string to return when an error.
+
+            // ctrl KK, KP, KN.  view..bookmark window
+
+            // top right drop down to get to a function
+
         private string GetResponse(string url)
         {
             string allData="";
@@ -100,9 +113,32 @@ namespace meetup_rsvp
             {
                 Stream streamedData;
                 WebRequest request = WebRequest.Create(url);
+                // why is response a stream rather than a string?
+                // might be big.
+
+                // The GET
                 streamedData = request.GetResponse().GetResponseStream();
                 StreamReader sr = new StreamReader(streamedData);
                 string line = "";
+                // StringBuilder is much more efficient than str+=".." 
+                // because strings are immutable.
+
+
+                // http://stackoverflow.com/questions/17801761/converting-stream-to-string-and-back-what-are-we-missing
+                // ReadToEnd()
+                // readToEnd is not recommended for a large amount.
+                // hmm who knows maybe it uses buffers, why wouldn't it?
+                // e.g. throw an exception on taking too long
+               
+                // StringBuilder is recommended for a large amount? yes. stringbuilder with streamreader and in this case, Stream.
+                // i'm not contrasting += with stringbuilder. we agree stringbuilder is better.
+                // i'm contrasting stringbuilder with readtoend. clearly both have the whole string.
+                // you say then it's almsot equal. that's my point. And less code.
+
+                // ok so the += is expensive..
+                // but string can take a large amount then and is used to here.
+                
+
                 StringBuilder allText = new StringBuilder();
                 while (line != null)
                 {
@@ -176,12 +212,21 @@ namespace meetup_rsvp
                 string strTime;
                 string strDate;
 
+                // Get Responds is something you wrote derived from msdn site
                 string response = GetResponse(dateTimeServerUrl);
                 if (response == string.Empty || response == "Service Error")
                 {
                     UpdateAppStatus("Shit! that failed :( ");
                     return;
                 }
+
+                // for date and time,
+                // no need for a regex..
+                // just everything in between a specific thing.
+                // for time, 8 char after the opening tag
+                // for date, you used two substrings to get between two tags.
+                // the second substring has 0 as first parameter and index of ending tag as last parameter.
+
                 string srchTime = "<span id=ct class=h1>";
                 string srchDate = "<span id=ctdat>";
 
