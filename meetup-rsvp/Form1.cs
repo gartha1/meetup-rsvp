@@ -13,6 +13,23 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 
+// amending it so don't have to count down every second
+// The check every second is updating label..in timer's tick.. we have to have that.
+// but checking whether the date time picker time match the current time..
+
+// amending it so can do any command. DONE
+// implement GET command
+
+    // won't be using windows time server &/ windows ntp server.
+     
+
+    // can copy a line without selecting it just doing ctrl-c
+    // colons in labels so when nothing in them you can see them on the form to select them
+
+
+    // some weird bug one time.
+
+
 namespace meetup_rsvp
 {
     public partial class Form1 : Form
@@ -29,12 +46,19 @@ namespace meetup_rsvp
         // EVENT HANDLERS
         private void Form1_Load(object sender, EventArgs e)
         {
-            FetchTAD(); // TAD - time and date.com
+            try
+            {
+                FetchTAD(); // TAD - time and date.com
+            }
+            catch(Exception  ee)
+            {
+                Debug.WriteLine(ee.ToString());
+            }
         }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            txbCurlCommand.Focus();
+            txbCommand.Focus();
             tmrLocalDateTime.Start();
         }
 
@@ -44,29 +68,29 @@ namespace meetup_rsvp
             btnSet.Enabled = false;
             btnCancel.Enabled = true;
             compareTimes = true;
-            txbCurlCommand.Enabled = false;
-            DateTime eventDate = dtpEventDate.Value;
-            DateTime eventTime = dtpEventTime.Value;
+            txbCommand.Enabled = false;
+            DateTime eventDate = dtpEventDate.Value;  // maybe not used
+            DateTime eventTime = dtpEventTime.Value;  // maybe not used
             dtpEventDate.Enabled = false;
             dtpEventTime.Enabled = false;
 
             //Debug.WriteLine(eventDate.ToShortDateString());
             //Debug.WriteLine(eventTime.ToLongTimeString());
-            UpdateAppStatus("Request set for url: " + txbCurlCommand.Text.Trim());
-            UpdateAppStatus("----------------------------------");
+            UpdateAppStatus("Command scheduled " + txbCommand.Text+ " on Date and Time: " + dtpEventDate.Value.ToShortDateString() + "  " + dtpEventTime.Value.ToLongTimeString());
+            UpdateAppStatus("----------------------------------"); //B
 
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             btnCancel.Enabled = false;
-            txbCurlCommand.Enabled = true;
+            txbCommand.Enabled = true;
             dtpEventDate.Enabled = true;
             dtpEventTime.Enabled = true;
             compareTimes = false;
             btnSet.Enabled = true;
-            UpdateAppStatus("Request cancelled for url: " + txbCurlCommand.Text.Trim());
-            UpdateAppStatus("----------------------------------");
+            UpdateAppStatus("Cancelled: " + txbCommand.Text.Trim());
+            UpdateAppStatus("----------------------------------"); // A
         }
 
         private void lnkClear_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -77,11 +101,18 @@ namespace meetup_rsvp
 
         private void tmrLocalDateTime_Tick(object sender, EventArgs e)
         {
-            UpdateLocalTimeLabels();
-            // Update TAD time locally only if fetch was succcessful when app started.
-            if (updateTADTime)
-                UpdateTADLocally();
-            CheckEventTimeReached();
+            try
+            {
+                UpdateLocalTimeLabels();
+                // Update TAD time locally only if fetch was succcessful when app started.
+                if (updateTADTime)
+                    UpdateTADLocally();
+                CheckEventTimeReached();
+            }
+            catch(Exception ee)
+            {
+                Debug.WriteLine(ee.ToString());
+            }
         }
 
         // METHODS CALLED FROM EVENT HANDLERS OR OTHER METHODS
@@ -108,7 +139,16 @@ namespace meetup_rsvp
         private string GetResponse(string url)
         {
             string allData="";
-            
+
+            if(url.StartsWith("https://"))
+            {
+                UpdateAppStatus("can't do get https://  gotta be http:// or just get [domain], or use curl (can do that in this program)");
+                return "Service Error"; // gotta be one of those responses.. "Service Error", "", .. 
+            }
+
+            if (!url.ToLower().StartsWith("http://")) url = "http://" + url;
+           // if (!url.ToLower().StartsWith("https://")) url = "https://" + url;
+
             try
             {
                 Stream streamedData;
@@ -158,28 +198,57 @@ namespace meetup_rsvp
             return allData;
         } // GetResponse() ends
 
-        private string ExecuteCurl(string args)
+        private string ExecuteCommand(string args)
         {
             string result = "";
             StringBuilder sb = new StringBuilder();
-//            ProcessStartInfo pinfo = new ProcessStartInfo(@"C:\Installed\curl740\curl.exe", args);
-            ProcessStartInfo pinfo = new ProcessStartInfo("curl.exe", args);
+
+            //string[] parts = args.Split(new char[] { ' ' });
+            //string[] parts = args.Split(' ');
+
+            string nameofcommandrun;
+            string argumentstocommand="";
+
+            args = args.Trim();
+            if (args.IndexOf(' ') != -1)
+            {
+                nameofcommandrun = args.Substring(0, args.IndexOf(' '));
+                Debug.WriteLine(nameofcommandrun + nameofcommandrun.Length);
+                argumentstocommand = args.Substring(nameofcommandrun.Length + 1);
+                Debug.WriteLine(argumentstocommand + argumentstocommand.Length);
+            }
+            else
+                nameofcommandrun = args;
+
+            //            ProcessStartInfo pinfo = new ProcessStartInfo(@"C:\Installed\curl740\curl.exe", args);
+
+            // seems like it doesn't work when no url is given, which is very strange.
+            ProcessStartInfo pinfo = new ProcessStartInfo(nameofcommandrun, args);
 
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardOutput = true;
+            pinfo.RedirectStandardError = true;
+
             pinfo.CreateNoWindow = true;
             try
             {
                 Process pCurl = Process.Start(pinfo);
-                while (!pCurl.StandardOutput.EndOfStream)
-                {
+
+                sb.Append("showing stdout:" + Environment.NewLine);
+
+                while (!pCurl.StandardOutput.EndOfStream)                
                     sb.Append(pCurl.StandardOutput.ReadLine());
-                }
+
+                sb.Append("showing stderr:" + Environment.NewLine);
+                
+                while (!pCurl.StandardError.EndOfStream)
+                    sb.Append(pCurl.StandardError.ReadLine());
+
                 result = sb.ToString();
             }
             catch
             {
-                UpdateAppStatus("curl not found in PATH");
+                UpdateAppStatus(nameofcommandrun + " not found in PATH");
             }
             
             return result;
@@ -190,6 +259,7 @@ namespace meetup_rsvp
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
+        /// http://stackoverflow.com/questions/7578857/how-to-check-whether-a-string-is-a-valid-http-url
         private bool ValidateUrl(string url)
         {
             if (url == string.Empty)
@@ -240,7 +310,7 @@ namespace meetup_rsvp
                 lblTADdate.Text = strDate;
                 lblTADtime.Text = strTime;
                 UpdateAppStatus("timeanddate.com data fetched successfully");
-                UpdateAppStatus("-----------------------------------------");
+                UpdateAppStatus("-----------------------------------");
                 updateTADTime = true;
                 clockTAD = new DigiClock(strTime);
             }
@@ -287,16 +357,27 @@ namespace meetup_rsvp
                 if (lblLocalDate.Text == dtpEventDate.Value.ToShortDateString()
                     && lblLocalTime.Text == dtpEventTime.Value.ToLongTimeString())
                 {
-                   
-                        //Debug.WriteLine("KABOOM");
-                        UpdateAppStatus("Firing request for scheduled event");
-                        UpdateAppStatus("URL: " + txbCurlCommand.Text);
-                        UpdateAppStatus("Date and Time: " + dtpEventDate.Value.ToShortDateString() + "  " + dtpEventTime.Value.ToLongTimeString());
-                        //string response = GetResponse(txbCurlCommand.Text.Trim());
-                        string response = ExecuteCurl(txbCurlCommand.Text.Trim());
 
-                        UpdateAppStatus("Response Received:");
-                        UpdateAppStatus("----");
+                    // only when the time matches
+
+                        txbCommand.Text = txbCommand.Text.Trim(); 
+                        //Debug.WriteLine("KABOOM");
+                        UpdateAppStatus("Firing request for scheduled event "+ txbCommand.Text+"\r\n"+"on Date and Time: " + dtpEventDate.Value.ToShortDateString() + "  " + dtpEventTime.Value.ToLongTimeString());
+                        //UpdateAppStatus("URL: " + txbCommand.Text);
+                    //string response = GetResponse(txbCurlCommand.Text.Trim());
+
+                    string response;
+
+                    if (txbCommand.Text.ToLower() == "get")
+                        response = "specify parameter to get";
+                    else if(txbCommand.Text.ToLower().StartsWith("get ")) { //implies something after space because already trimmed
+                        response = GetResponse(txbCommand.Text.Substring(4)); //startindex 4, to end. The cas ein most languages. startindex and length. To start from beginning do 0,
+                    }
+                    else
+                        response = ExecuteCommand(txbCommand.Text.Trim());
+
+                        UpdateAppStatus("Response:"); 
+                   //     UpdateAppStatus("----");
                         UpdateAppStatus(response);
                         UpdateAppStatus("----");
                 }

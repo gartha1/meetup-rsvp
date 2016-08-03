@@ -16,3 +16,12 @@ C:\Users\harvey\Downloads\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csprojRe
 C:\Users\harvey\Downloads\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Form1.resources
 C:\Users\harvey\Downloads\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Properties.Resources.resources
 C:\Users\harvey\Downloads\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csproj.GenerateResource.Cache
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\bin\Debug\meetup-rsvp.exe.config
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.exe
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.pdb
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\bin\Debug\meetup-rsvp.exe
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\bin\Debug\meetup-rsvp.pdb
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csprojResolveAssemblyReference.cache
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Form1.resources
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\obj\Debug\meetup_rsvp.Properties.Resources.resources
+C:\Users\harvey\Documents\Visual Studio 2015\Projects\meetup-rsvp\meetup-rsvp\obj\Debug\meetup-rsvp.csproj.GenerateResource.Cache
