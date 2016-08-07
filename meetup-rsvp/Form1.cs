@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using System.Reflection;
 
 // amending it so don't have to count down every second
 // The check every second is updating label..in timer's tick.. we have to have that.
@@ -20,14 +21,14 @@ using System.Diagnostics;
 // amending it so can do any command. DONE
 // implement GET command
 
-    // won't be using windows time server &/ windows ntp server.
-     
-
-    // can copy a line without selecting it just doing ctrl-c
-    // colons in labels so when nothing in them you can see them on the form to select them
+// won't be using windows time server &/ windows ntp server.
 
 
-    // some weird bug one time.
+// can copy a line without selecting it just doing ctrl-c
+// colons in labels so when nothing in them you can see them on the form to select them
+
+
+// some weird bug one time.
 
 
 namespace meetup_rsvp
@@ -65,6 +66,9 @@ namespace meetup_rsvp
 
         private void btnSet_Click(object sender, EventArgs e)
         {
+
+            if (txbCommand.Text.Equals("")) { UpdateAppStatus("No command entered"); return; } 
+
             btnSet.Enabled = false;
             btnCancel.Enabled = true;
             compareTimes = true;
@@ -76,6 +80,8 @@ namespace meetup_rsvp
 
             //Debug.WriteLine(eventDate.ToShortDateString());
             //Debug.WriteLine(eventTime.ToLongTimeString());
+
+
             UpdateAppStatus("Command scheduled " + txbCommand.Text+ " on Date and Time: " + dtpEventDate.Value.ToShortDateString() + "  " + dtpEventTime.Value.ToLongTimeString());
             UpdateAppStatus("----------------------------------"); //B
 
@@ -224,17 +230,20 @@ namespace meetup_rsvp
 
             // seems like it doesn't work when no url is given, which is very strange.
             ProcessStartInfo pinfo = new ProcessStartInfo(nameofcommandrun, args);
-
+            MessageBox.Show(pinfo.WorkingDirectory);
+            MessageBox.Show(Environment.CurrentDirectory);
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardOutput = true;
             pinfo.RedirectStandardError = true;
-
+             
             pinfo.CreateNoWindow = true;
             try
             {
                 Process pCurl = Process.Start(pinfo);
 
                 sb.Append("showing stdout:" + Environment.NewLine);
+
+                
 
                 while (!pCurl.StandardOutput.EndOfStream)                
                     sb.Append(pCurl.StandardOutput.ReadLine());
@@ -309,7 +318,7 @@ namespace meetup_rsvp
 
                 lblTADdate.Text = strDate;
                 lblTADtime.Text = strTime;
-                UpdateAppStatus("timeanddate.com data fetched successfully");
+                UpdateAppStatus("timeanddate.com data fetched successfully(though using local time for event firing anyway)");
                 UpdateAppStatus("-----------------------------------");
                 updateTADTime = true;
                 clockTAD = new DigiClock(strTime);
@@ -384,7 +393,28 @@ namespace meetup_rsvp
             }
         }
 
+        private void btnanother_Click(object sender, EventArgs e)
+        {
+            createNewInstance(); // can type that and click the bulb and the yellow and it generates it
+        }
 
+        private void createNewInstance()
+        {
+            // In terms of books, 70536  partially replaced by 70483. 
+            // in terms of exam, it's the 483 exam.
+
+            //Application.StartupPath + Path.PathSeparator+..? not neede.d there was one like assembly(in some namespace or other), .getexecuting assembly or something.
+            ProcessStartInfo pInfo = new ProcessStartInfo(Application.ExecutablePath);
+            Process p = Process.Start(pInfo);
+            UpdateAppStatus("Launched another instance");
+
+           
+            // to get a using statement automatically..
+            // write e.g. Assembly,  you have to get the casing right,  get the red squiggly line..
+            // then the bulb appears, and it will search for that assembly and show the using statement.
+            //Debug.WriteLine(Assembly.GetExecutingAssembly().FullName);
+           
+        }
     } // form ends
 } // namespace ends
 // POST tester : http://www.hashemian.com/tools/form-post-tester.php -d "abc=123"

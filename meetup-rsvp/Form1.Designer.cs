@@ -45,6 +45,7 @@
             this.tmrLocalDateTime = new System.Windows.Forms.Timer(this.components);
             this.btnCancel = new System.Windows.Forms.Button();
             this.lnkClear = new System.Windows.Forms.LinkLabel();
+            this.btnanother = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txbCommand
@@ -209,11 +210,22 @@
             this.lnkClear.Text = "Clear Messages";
             this.lnkClear.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkClear_LinkClicked);
             // 
+            // btnanother
+            // 
+            this.btnanother.Location = new System.Drawing.Point(339, 1);
+            this.btnanother.Name = "btnanother";
+            this.btnanother.Size = new System.Drawing.Size(213, 23);
+            this.btnanother.TabIndex = 15;
+            this.btnanother.Text = "ANOTHER INSTANCE OF EXE";
+            this.btnanother.UseVisualStyleBackColor = true;
+            this.btnanother.Click += new System.EventHandler(this.btnanother_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(949, 414);
+            this.Controls.Add(this.btnanother);
             this.Controls.Add(this.lnkClear);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblLocalTime);
@@ -256,6 +268,7 @@
         private System.Windows.Forms.Timer tmrLocalDateTime;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.LinkLabel lnkClear;
+        private System.Windows.Forms.Button btnanother;
     }
 }
 
