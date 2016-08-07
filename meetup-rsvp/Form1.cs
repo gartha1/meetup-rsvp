@@ -204,7 +204,7 @@ namespace meetup_rsvp
             return allData;
         } // GetResponse() ends
 
-        private string ExecuteCommand(string args)
+        private string ExecuteCommand(string commandwithargs)
         {
             string result = "";
             StringBuilder sb = new StringBuilder();
@@ -215,23 +215,23 @@ namespace meetup_rsvp
             string nameofcommandrun;
             string argumentstocommand="";
 
-            args = args.Trim();
-            if (args.IndexOf(' ') != -1)
+            commandwithargs = commandwithargs.Trim();
+            if (commandwithargs.IndexOf(' ') != -1)
             {
-                nameofcommandrun = args.Substring(0, args.IndexOf(' '));
+                nameofcommandrun = commandwithargs.Substring(0, commandwithargs.IndexOf(' '));
                 Debug.WriteLine(nameofcommandrun + nameofcommandrun.Length);
-                argumentstocommand = args.Substring(nameofcommandrun.Length + 1);
+                argumentstocommand = commandwithargs.Substring(nameofcommandrun.Length + 1);
                 Debug.WriteLine(argumentstocommand + argumentstocommand.Length);
             }
             else
-                nameofcommandrun = args;
+                nameofcommandrun = commandwithargs;
 
             //            ProcessStartInfo pinfo = new ProcessStartInfo(@"C:\Installed\curl740\curl.exe", args);
 
             // seems like it doesn't work when no url is given, which is very strange.
-            ProcessStartInfo pinfo = new ProcessStartInfo(nameofcommandrun, args);
-            MessageBox.Show(pinfo.WorkingDirectory);
-            MessageBox.Show(Environment.CurrentDirectory);
+            ProcessStartInfo pinfo = new ProcessStartInfo(nameofcommandrun, argumentstocommand);
+           // MessageBox.Show(pinfo.WorkingDirectory);
+           // MessageBox.Show(Environment.CurrentDirectory);
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardOutput = true;
             pinfo.RedirectStandardError = true;
