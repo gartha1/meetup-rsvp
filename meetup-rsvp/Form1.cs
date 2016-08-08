@@ -415,6 +415,25 @@ namespace meetup_rsvp
             //Debug.WriteLine(Assembly.GetExecutingAssembly().FullName);
            
         }
+
+        private void btnconveniencemeetupthing_Click(object sender, EventArgs e)
+        {
+            txbmeetupurl.Text = txbmeetupurl.Text.Trim();
+            int startIndex = txbmeetupurl.Text.IndexOf("events/")+"events/".Length;
+            if (txbmeetupurl.Text[txbmeetupurl.Text.Length - 1] == '/')  txbmeetupurl.Text=txbmeetupurl.Text.Remove(txbmeetupurl.Text.Length-1);
+            //Debug.WriteLine(txbmeetupurl.Text);
+            string substr = txbmeetupurl.Text.Substring(startIndex); // event id
+            //txbmeetupconvenientcommand.Text = substr;
+            //string curlcommand = "curl \"https://api.meetup.com/2/rsvp/\" -k -F \"event_id=231962061\" -F \"rsvp=yes\" -F \"key=4f482f48c63460266a7e4b63454b4f\"";
+            string curlcommandA = "curl \"https://api.meetup.com/2/rsvp/\" -k -F ";
+            string curlcommandB = "\"event_id="+substr+"\" ";
+            string curlcommandC = "-F \"rsvp=yes\" -F \"key=4f482f48c63460266a7e4b63454b4f\"";
+            string curlcommand = curlcommandA + curlcommandB + curlcommandC;
+            //Debug.WriteLine(curlcommand);
+            txbmeetupconvenientcommand.Text = curlcommand;
+
+
+        }
     } // form ends
 } // namespace ends
 // POST tester : http://www.hashemian.com/tools/form-post-tester.php -d "abc=123"

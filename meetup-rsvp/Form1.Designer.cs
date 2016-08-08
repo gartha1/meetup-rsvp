@@ -46,6 +46,11 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.lnkClear = new System.Windows.Forms.LinkLabel();
             this.btnanother = new System.Windows.Forms.Button();
+            this.txbmeetupurl = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txbmeetupconvenientcommand = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnconveniencemeetupthing = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txbCommand
@@ -220,11 +225,58 @@
             this.btnanother.UseVisualStyleBackColor = true;
             this.btnanother.Click += new System.EventHandler(this.btnanother_Click);
             // 
+            // txbmeetupurl
+            // 
+            this.txbmeetupurl.Location = new System.Drawing.Point(97, 405);
+            this.txbmeetupurl.Name = "txbmeetupurl";
+            this.txbmeetupurl.Size = new System.Drawing.Size(419, 20);
+            this.txbmeetupurl.TabIndex = 16;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 408);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "paste meetupurl";
+            // 
+            // txbmeetupconvenientcommand
+            // 
+            this.txbmeetupconvenientcommand.Location = new System.Drawing.Point(97, 437);
+            this.txbmeetupconvenientcommand.Name = "txbmeetupconvenientcommand";
+            this.txbmeetupconvenientcommand.Size = new System.Drawing.Size(419, 20);
+            this.txbmeetupconvenientcommand.TabIndex = 18;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 447);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "receive command";
+            // 
+            // btnconveniencemeetupthing
+            // 
+            this.btnconveniencemeetupthing.Location = new System.Drawing.Point(522, 405);
+            this.btnconveniencemeetupthing.Name = "btnconveniencemeetupthing";
+            this.btnconveniencemeetupthing.Size = new System.Drawing.Size(258, 23);
+            this.btnconveniencemeetupthing.TabIndex = 20;
+            this.btnconveniencemeetupthing.Text = "click to put < in box below for convenience";
+            this.btnconveniencemeetupthing.UseVisualStyleBackColor = true;
+            this.btnconveniencemeetupthing.Click += new System.EventHandler(this.btnconveniencemeetupthing_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 414);
+            this.ClientSize = new System.Drawing.Size(949, 469);
+            this.Controls.Add(this.btnconveniencemeetupthing);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txbmeetupconvenientcommand);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txbmeetupurl);
             this.Controls.Add(this.btnanother);
             this.Controls.Add(this.lnkClear);
             this.Controls.Add(this.btnCancel);
@@ -269,6 +321,11 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.LinkLabel lnkClear;
         private System.Windows.Forms.Button btnanother;
+        private System.Windows.Forms.TextBox txbmeetupurl;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txbmeetupconvenientcommand;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnconveniencemeetupthing;
     }
 }
 
