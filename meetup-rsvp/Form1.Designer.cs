@@ -51,6 +51,7 @@
             this.txbmeetupconvenientcommand = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnconveniencemeetupthing = new System.Windows.Forms.Button();
+            this.btnopenapplicationdirectory = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txbCommand
@@ -267,11 +268,22 @@
             this.btnconveniencemeetupthing.UseVisualStyleBackColor = true;
             this.btnconveniencemeetupthing.Click += new System.EventHandler(this.btnconveniencemeetupthing_Click);
             // 
+            // btnopenapplicationdirectory
+            // 
+            this.btnopenapplicationdirectory.Location = new System.Drawing.Point(791, 1);
+            this.btnopenapplicationdirectory.Name = "btnopenapplicationdirectory";
+            this.btnopenapplicationdirectory.Size = new System.Drawing.Size(155, 23);
+            this.btnopenapplicationdirectory.TabIndex = 21;
+            this.btnopenapplicationdirectory.Text = "Open Application Directory";
+            this.btnopenapplicationdirectory.UseVisualStyleBackColor = true;
+            this.btnopenapplicationdirectory.Click += new System.EventHandler(this.btnopenapplicationdirectory_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(949, 469);
+            this.Controls.Add(this.btnopenapplicationdirectory);
             this.Controls.Add(this.btnconveniencemeetupthing);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txbmeetupconvenientcommand);
@@ -326,6 +338,7 @@
         private System.Windows.Forms.TextBox txbmeetupconvenientcommand;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnconveniencemeetupthing;
+        private System.Windows.Forms.Button btnopenapplicationdirectory;
     }
 }
 

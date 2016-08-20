@@ -434,6 +434,11 @@ namespace meetup_rsvp
 
 
         }
+
+        private void btnopenapplicationdirectory_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", Application.StartupPath+@"..\..\..\..\");
+        }
     } // form ends
 } // namespace ends
 // POST tester : http://www.hashemian.com/tools/form-post-tester.php -d "abc=123"
